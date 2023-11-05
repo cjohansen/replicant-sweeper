@@ -1,0 +1,10 @@
+{:paths ["src"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        org.clojure/clojurescript {:mvn/version "1.11.60"}
+        no.cjohansen/replicant {:git/url "https://github.com/cjohansen/replicant"
+                                :sha "4f5f696ca16c2f8303d8395f78a966f3830409a4"}}
+ :aliases
+ {:dev {:extra-paths ["dev" "dev-resources"]
+        :extra-deps {cider/piggieback {:mvn/version "0.5.3"}
+                     com.bhauman/figwheel-main {:mvn/version "0.2.18"}}
+        :jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}}}
