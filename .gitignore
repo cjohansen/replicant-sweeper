@@ -1,1 +1,3 @@
 dev-resources/public/js
+.cpcache/
+.nrepl-port
