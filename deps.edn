@@ -2,7 +2,7 @@
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/clojurescript {:mvn/version "1.11.60"}
         no.cjohansen/replicant {:git/url "https://github.com/cjohansen/replicant"
-                                :sha "4f5f696ca16c2f8303d8395f78a966f3830409a4"}}
+                                :sha "ce72ccb81c098d13933afaf48b3c80cf601ca44c"}}
  :aliases
  {:dev {:extra-paths ["dev" "dev-resources"]
         :extra-deps {cider/piggieback {:mvn/version "0.5.3"}
