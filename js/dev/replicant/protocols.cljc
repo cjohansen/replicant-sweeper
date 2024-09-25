@@ -21,6 +21,10 @@
   (insert-before [this el child-node reference-node])
   (append-child [this el child-node])
   (remove-child [this el child-node])
+  (on-transition-end [this el f])
   (replace-child [this el insert-child replace-child])
+  (remove-all-children [this el])
 
-  (get-child [this el idx]))
+  (get-child [this el idx])
+
+  (next-frame [this f]))

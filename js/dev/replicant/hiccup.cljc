@@ -1,105 +1,96 @@
 (ns replicant.hiccup
-  (:require [clojure.string :as str]))
+  #?(:cljs (:require-macros [replicant.hiccup])))
 
-(defn hiccup? [sexp]
-  (and (vector? sexp)
-       (not (map-entry? sexp))
-       (or (keyword? (first sexp)) (fn? (first sexp)))))
+(defmacro hget [x k]
+  (if (:ns &env)
+    `(aget ~x ~k)
+    `(nth ~x ~k)))
 
-(defn get-classes [classes]
-  (set
-   (cond
-     (keyword? classes) [(name classes)]
-     (string? classes) [classes]
-     (empty? classes) []
-     (coll? classes) (map #(if (keyword? %) (name %) %) classes)
-     (nil? classes) []
-     :else (throw (ex-info "Received class name that is neither string, keyword, or a collection of those"
-                           {:classes classes})))))
+(defmacro tag-name [headers]
+  `(hget ~headers 0))
 
-(defn parse-hiccup-symbol [sym attrs]
-  (let [[_ id] (re-find #"#([^\.#]+)" sym)
-        [el & classes] (-> (str/replace sym #"#([^#\.]+)" "")
-                           (str/split #"\."))
-        classes (->> (concat
-                      (get-classes (:class attrs))
-                      (get-classes (:className attrs))
-                      classes)
-                     (mapcat #(str/split % #" +"))
-                     (remove empty?))]
-    [(str/lower-case el)
-     (cond-> (dissoc attrs :class :className)
-       id (assoc :id id)
-       (seq classes) (assoc :classes classes))]))
+(defmacro id [headers]
+  `(hget ~headers 1))
 
-(defn get-tag-name [hiccup]
-  (when (and (coll? hiccup) (keyword? (first hiccup)))
-    (re-find #"^[a-z0-9]+" (str/lower-case (name (first hiccup))))))
+(defmacro classes [headers]
+  `(hget ~headers 2))
 
-(defn explode-styles [s]
-  (->> (str/split s #";")
-       (map #(let [[k v] (map str/trim (str/split % #":"))]
-               [(keyword k) v]))
-       (into {})))
+(defmacro rkey [headers]
+  `(hget ~headers 3))
 
-(def ^:private skip-pixelize-attrs
-  #{:animation-iteration-count
-    :box-flex
-    :box-flex-group
-    :box-ordinal-group
-    :column-count
-    :fill-opacity
-    :flex
-    :flex-grow
-    :flex-positive
-    :flex-shrink
-    :flex-negative
-    :flex-order
-    :font-weight
-    :line-clamp
-    :line-height
-    :opacity
-    :order
-    :orphans
-    :stop-opacity
-    :stroke-dashoffset
-    :stroke-opacity
-    :stroke-width
-    :tab-size
-    :widows
-    :z-index
-    :zoom})
+(defmacro attrs [headers]
+  `(hget ~headers 4))
 
-(defn prep-styles [styles]
-  (reduce (fn [m [attr v]]
-            (if (number? v)
-              (if (skip-pixelize-attrs attr)
-                (update m attr str)
-                (update m attr str "px"))
-              m))
-          styles
-          styles))
+(defmacro children [headers]
+  `(hget ~headers 5))
 
-(defn prep-hiccup-attrs [attrs]
-  (cond-> attrs
-    (string? (:style attrs)) (update :style explode-styles)
-    (:style attrs) (update :style prep-styles)))
+(defmacro html-ns [headers]
+  `(hget ~headers 6))
 
-(defn flatten-seqs [xs]
-  (loop [res []
-         [x & xs] xs]
-    (cond
-      (and (nil? xs) (nil? x)) (not-empty res)
-      (seq? x) (recur (into res (flatten-seqs x)) xs)
-      :else (recur (conj res x) xs))))
+(defmacro sexp [headers]
+  `(hget ~headers 7))
 
-(defn inflate [sexp]
-  (let [tag-name (first sexp)
-        args (rest sexp)
-        args (if (map? (first args)) args (concat [{}] args))]
-    (if (fn? tag-name)
-      (apply tag-name (rest sexp))
-      (let [[tag-name attrs] (parse-hiccup-symbol (name tag-name) (first args))]
-        {:tag-name tag-name
-         :attrs (prep-hiccup-attrs attrs)
-         :children (flatten-seqs (rest args))}))))
+(defmacro text [headers]
+  `(hget ~headers 8))
+
+(defmacro ident [headers]
+  `(hget ~headers 9))
+
+(defmacro alias-sexp [headers]
+  `(hget ~headers 10))
+
+(defmacro get-key [parsed-tag attrs]
+  `(when-let [k# (:replicant/key ~attrs)]
+     [(hget ~parsed-tag 0) k#]))
+
+(defmacro create [parsed-tag attrs children ns sexp]
+  (if (:ns &env)
+    `(let [pt# ~parsed-tag]
+       (doto pt#
+         (.push (get-key pt# ~attrs))
+         (.push ~attrs)
+         (.push ~children)
+         (.push ~ns)
+         (.push ~sexp)
+         (.push nil)
+         (.push (aget pt# 0))
+         (.push nil)))
+    `(let [pt# ~parsed-tag]
+       (-> pt#
+           (conj (get-key pt# ~attrs))
+           (conj ~attrs)
+           (conj ~children)
+           (conj ~ns)
+           (conj ~sexp)
+           (conj nil)
+           (conj (first pt#))
+           (conj nil)))))
+
+(defmacro create-text-node [text]
+  (if (:ns &env)
+    `(let [text# ~text] (js/Array. nil nil nil nil nil nil nil text# text# nil nil))
+    `(let [text# ~text] [nil nil nil nil nil nil nil text# text# nil nil])))
+
+(defmacro update-attrs [headers & args]
+  (if (:ns &env)
+    `(let [headers# ~headers]
+       (aset headers# 4 (~(first args) (aget headers# 4) ~@(rest args)))
+       headers#)
+    `(update ~headers 4 ~@args)))
+
+(defmacro from-alias [alias-k alias headers]
+  (if (:ns &env)
+    `(let [hh# ~headers]
+       (when hh#
+         (doto hh#
+           (aset 3 (or (rkey ~alias) (rkey hh#)))
+           (aset 7 (sexp hh#))
+           (aset 9 ~alias-k)
+           (aset 10 (sexp ~alias)))))
+    `(let [hh# ~headers]
+       (when hh#
+         (-> hh#
+             (assoc 3 (or (rkey ~alias) (rkey hh#)))
+             (assoc 7 (sexp hh#))
+             (assoc 9 ~alias-k)
+             (assoc 10 (sexp ~alias)))))))

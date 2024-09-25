@@ -36,20 +36,20 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 replicant.dom.set_dispatch_BANG_.call(null,(function (re,_e,actions){
 cljs.core.prn.call(null,"Dispatch",re);
 
-var seq__9652 = cljs.core.seq.call(null,actions);
-var chunk__9653 = null;
-var count__9654 = (0);
-var i__9655 = (0);
+var seq__12292 = cljs.core.seq.call(null,actions);
+var chunk__12293 = null;
+var count__12294 = (0);
+var i__12295 = (0);
 while(true){
-if((i__9655 < count__9654)){
-var vec__9664 = cljs.core._nth.call(null,chunk__9653,i__9655);
-var action = cljs.core.nth.call(null,vec__9664,(0),null);
-var id = cljs.core.nth.call(null,vec__9664,(1),null);
+if((i__12295 < count__12294)){
+var vec__12304 = cljs.core._nth.call(null,chunk__12293,i__12295);
+var action = cljs.core.nth.call(null,vec__12304,(0),null);
+var id = cljs.core.nth.call(null,vec__12304,(1),null);
 cljs.core.prn.call(null,"Processing action",action,id);
 
-var G__9667_9672 = action;
-var G__9667_9673__$1 = (((G__9667_9672 instanceof cljs.core.Keyword))?G__9667_9672.fqn:null);
-switch (G__9667_9673__$1) {
+var G__12307_12312 = action;
+var G__12307_12313__$1 = (((G__12307_12312 instanceof cljs.core.Keyword))?G__12307_12312.fqn:null);
+switch (G__12307_12313__$1) {
 case "reveal-tile":
 cljs.core.swap_BANG_.call(null,sweeper.ui.app_data,sweeper.game.reveal_tile,id);
 
@@ -59,44 +59,44 @@ cljs.core.swap_BANG_.call(null,sweeper.ui.app_data,cljs.core.assoc_in,new cljs.c
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__9667_9673__$1)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12307_12313__$1)].join('')));
 
 }
 
 
-var G__9675 = seq__9652;
-var G__9676 = chunk__9653;
-var G__9677 = count__9654;
-var G__9678 = (i__9655 + (1));
-seq__9652 = G__9675;
-chunk__9653 = G__9676;
-count__9654 = G__9677;
-i__9655 = G__9678;
+var G__12315 = seq__12292;
+var G__12316 = chunk__12293;
+var G__12317 = count__12294;
+var G__12318 = (i__12295 + (1));
+seq__12292 = G__12315;
+chunk__12293 = G__12316;
+count__12294 = G__12317;
+i__12295 = G__12318;
 continue;
 } else {
-var temp__5804__auto__ = cljs.core.seq.call(null,seq__9652);
+var temp__5804__auto__ = cljs.core.seq.call(null,seq__12292);
 if(temp__5804__auto__){
-var seq__9652__$1 = temp__5804__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__9652__$1)){
-var c__5568__auto__ = cljs.core.chunk_first.call(null,seq__9652__$1);
-var G__9679 = cljs.core.chunk_rest.call(null,seq__9652__$1);
-var G__9680 = c__5568__auto__;
-var G__9681 = cljs.core.count.call(null,c__5568__auto__);
-var G__9682 = (0);
-seq__9652 = G__9679;
-chunk__9653 = G__9680;
-count__9654 = G__9681;
-i__9655 = G__9682;
+var seq__12292__$1 = temp__5804__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__12292__$1)){
+var c__5568__auto__ = cljs.core.chunk_first.call(null,seq__12292__$1);
+var G__12319 = cljs.core.chunk_rest.call(null,seq__12292__$1);
+var G__12320 = c__5568__auto__;
+var G__12321 = cljs.core.count.call(null,c__5568__auto__);
+var G__12322 = (0);
+seq__12292 = G__12319;
+chunk__12293 = G__12320;
+count__12294 = G__12321;
+i__12295 = G__12322;
 continue;
 } else {
-var vec__9668 = cljs.core.first.call(null,seq__9652__$1);
-var action = cljs.core.nth.call(null,vec__9668,(0),null);
-var id = cljs.core.nth.call(null,vec__9668,(1),null);
+var vec__12308 = cljs.core.first.call(null,seq__12292__$1);
+var action = cljs.core.nth.call(null,vec__12308,(0),null);
+var id = cljs.core.nth.call(null,vec__12308,(1),null);
 cljs.core.prn.call(null,"Processing action",action,id);
 
-var G__9671_9683 = action;
-var G__9671_9684__$1 = (((G__9671_9683 instanceof cljs.core.Keyword))?G__9671_9683.fqn:null);
-switch (G__9671_9684__$1) {
+var G__12311_12323 = action;
+var G__12311_12324__$1 = (((G__12311_12323 instanceof cljs.core.Keyword))?G__12311_12323.fqn:null);
+switch (G__12311_12324__$1) {
 case "reveal-tile":
 cljs.core.swap_BANG_.call(null,sweeper.ui.app_data,sweeper.game.reveal_tile,id);
 
@@ -106,19 +106,19 @@ cljs.core.swap_BANG_.call(null,sweeper.ui.app_data,cljs.core.assoc_in,new cljs.c
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__9671_9684__$1)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12311_12324__$1)].join('')));
 
 }
 
 
-var G__9686 = cljs.core.next.call(null,seq__9652__$1);
-var G__9687 = null;
-var G__9688 = (0);
-var G__9689 = (0);
-seq__9652 = G__9686;
-chunk__9653 = G__9687;
-count__9654 = G__9688;
-i__9655 = G__9689;
+var G__12326 = cljs.core.next.call(null,seq__12292__$1);
+var G__12327 = null;
+var G__12328 = (0);
+var G__12329 = (0);
+seq__12292 = G__12326;
+chunk__12293 = G__12327;
+count__12294 = G__12328;
+i__12295 = G__12329;
 continue;
 }
 } else {

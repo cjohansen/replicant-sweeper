@@ -1,100 +1,177 @@
 (ns replicant.dom
-  (:require [replicant.core :as r]
-            [replicant.protocols :as replicant]))
+  (:require [replicant.alias :as alias]
+            [replicant.core :as r]
+            [replicant.protocols :as replicant]
+            [replicant.transition :as transition]))
 
-(defn remove-listener [el event]
+(defn remove-listener [^js/EventTarget el event]
   (when-let [old-handler (some-> el .-replicantHandlers (aget event))]
     (.removeEventListener el event old-handler)))
 
+(defn on-next-frame [f]
+  (js/requestAnimationFrame
+   #(js/requestAnimationFrame f)))
+
+(defn -on-transition-end [el f]
+  (let [[n dur] (-> (js/window.getComputedStyle el)
+                    (.getPropertyValue "transition-duration")
+                    transition/get-transition-stats)]
+    (if (= n 0)
+      (f)
+      (let [complete (volatile! 0)
+            timer (volatile! nil)
+            started (js/Date.)
+            callback (fn listener [& _args]
+                       (let [cn (vswap! complete inc)]
+                         (when (or (<= n cn)
+                                   (< dur (- (js/Date.) started)))
+                           (.removeEventListener el "transitionend" listener)
+                           (js/clearTimeout @timer)
+                           (f))))]
+        (.addEventListener el "transitionend" callback)
+        ;; The timer is a fail-safe. You could have set transition properties
+        ;; that either don't change, or don't change in a way that triggers an
+        ;; actual transition on unmount (e.g. changing height from auto to 0
+        ;; causes no transition). When this happens, there will not be as many
+        ;; transitionend events as there are transition durations. To avoid
+        ;; getting stuck, the timer will come in and clean up.
+        ;;
+        ;; The timer is set with a hefty delay to avoid cutting a transition
+        ;; short, in the case of a backed up browser working on overtime. Not
+        ;; sure how realistic this is, but better safe than sorry, and the
+        ;; important part is that the element doesn't get stuck forever.
+        (vreset! timer (js/setTimeout callback (+ dur 200)))))))
+
 (defn create-renderer []
-  (let [hooks #js []]
-    (reify
-      replicant/IRender
-      (create-text-node [_this text]
-        (js/document.createTextNode text))
+  (reify
+    replicant/IRender
+    (create-text-node [_this text]
+      (js/document.createTextNode text))
 
-      (create-element [_this tag-name options]
-        (if-let [ns (:ns options)]
-          (js/document.createElementNS ns tag-name)
-          (js/document.createElement tag-name)))
+    (create-element [_this tag-name options]
+      (if-let [ns (:ns options)]
+        (js/document.createElementNS ns tag-name)
+        (js/document.createElement tag-name)))
 
-      (set-style [this el style v]
-        (aset (.-style el) (name style) v)
-        this)
+    (set-style [this el style v]
+      (.setProperty (.-style el) (name style) v)
+      this)
 
-      (remove-style [this el style]
-        (aset (.-style el) (name style) nil)
-        this)
+    (remove-style [this el style]
+      (.removeProperty (.-style el) (name style))
+      this)
 
-      (add-class [this el cn]
-        (.add (.-classList el) cn)
-        this)
+    (add-class [this el cn]
+      (.add (.-classList el) cn)
+      this)
 
-      (remove-class [this el cn]
-        (.remove (.-classList el) cn)
-        this)
+    (remove-class [this el cn]
+      (.remove (.-classList el) cn)
+      this)
 
-      (set-attribute [this el attr v opt]
-        (cond
-          (= "innerHTML" attr)
-          (set! (.-innerHTML el) v)
+    (set-attribute [this el attr v opt]
+      (cond
+        (= "innerHTML" attr)
+        (set! (.-innerHTML el) v)
 
-          (:ns opt)
-          (.setAttributeNS el (:ns opt) attr v)
+        (= "value" attr)
+        (set! (.-value el) v)
 
-          :else
-          (.setAttribute el attr v))
-        this)
+        (:ns opt)
+        (.setAttributeNS el (:ns opt) attr v)
 
-      (remove-attribute [this el attr]
-        (if (= :innerHTML attr)
-          (set! (.-innerHTML el) "")
-          (.removeAttribute el attr))
-        this)
+        :else
+        (.setAttribute el attr v))
+      this)
 
-      (set-event-handler [this el event handler]
-        (when-not (.-replicantHandlers el)
-          (set! (.-replicantHandlers el) #js {}))
-        (let [event (name event)]
-          (remove-listener el event)
-          (aset (.-replicantHandlers el) event handler)
-          (.addEventListener el event handler))
-        this)
+    (remove-attribute [this el attr]
+      (if (= "innerHTML" attr)
+        (set! (.-innerHTML el) "")
+        (.removeAttribute el attr))
+      this)
 
-      (remove-event-handler [this el event]
-        (let [event (name event)]
-          (remove-listener el event)
-          (aset (.-replicantHandlers el) event nil))
-        this)
+    (set-event-handler [this ^js/EventTarget el event handler]
+      (when-not (.-replicantHandlers el)
+        (set! (.-replicantHandlers el) #js {}))
+      (let [event (name event)]
+        (remove-listener el event)
+        (aset (.-replicantHandlers el) event handler)
+        (.addEventListener el event handler))
+      this)
 
-      (append-child [this el child-node]
-        (.appendChild el child-node)
-        this)
+    (remove-event-handler [this ^js/EventTarget el event]
+      (let [event (name event)]
+        (remove-listener el event)
+        (aset (.-replicantHandlers el) event nil))
+      this)
 
-      (insert-before [this el child-node reference-node]
-        (.insertBefore el child-node reference-node)
-        this)
+    (append-child [this el child-node]
+      (.appendChild el child-node)
+      this)
 
-      (remove-child [this el child-node]
-        (.removeChild el child-node)
-        this)
+    (insert-before [this el child-node reference-node]
+      (.insertBefore el child-node reference-node)
+      this)
 
-      (replace-child [this el insert-child replace-child]
-        (.replaceChild el insert-child replace-child)
-        this)
+    (remove-child [this el child-node]
+      (.removeChild el child-node)
+      this)
 
-      (get-child [_this el idx]
-        (aget (.-childNodes el) (or idx 0))))))
+    (on-transition-end [this el f]
+      (-on-transition-end el f)
+      this)
 
-(defonce state (atom {}))
+    (replace-child [this el insert-child replace-child]
+      (.replaceChild el insert-child replace-child)
+      this)
 
-(defn ^:export render [el hiccup]
-  (when-not (contains? @state el)
-    (swap! state assoc el {:renderer (create-renderer)}))
-  (let [{:keys [renderer current]} (get @state el)]
-    (r/reconcile renderer el hiccup current))
-  (swap! state assoc-in [el :current] hiccup)
+    (remove-all-children [this el]
+      (set! (.-textContent el) "")
+      this)
+
+    (get-child [_this el idx]
+      (aget (.-childNodes el) idx))
+
+    (next-frame [_this f]
+      (on-next-frame f))))
+
+(defonce state (volatile! {}))
+
+(defn ^:export render
+  "Render `hiccup` in DOM element `el`. Replaces any pre-existing content not
+  created by this function. Subsequent calls with the same `el` will update the
+  rendered DOM by comparing `hiccup` to the previous `hiccup`."
+  [el hiccup & [{:keys [aliases]}]]
+  (let [rendering? (get-in @state [el :rendering?])]
+    (when-not (contains? @state el)
+      (set! (.-innerHTML el) "")
+      (vswap! state assoc el {:renderer (create-renderer)
+                              :unmounts (volatile! #{})
+                              :rendering? true
+                              :queue []}))
+    (if rendering?
+      (vswap! state update-in [el :queue] #(conj % hiccup))
+      (do
+        (vswap! state assoc-in [el :rendering?] true)
+        (let [{:keys [renderer current unmounts]} (get @state el)
+              {:keys [vdom]} (r/reconcile renderer el hiccup current {:unmounts unmounts
+                                                                      :aliases (or aliases (alias/get-aliases))})]
+          (vswap! state update el merge {:current vdom
+                                         :rendering? false})
+          (when-let [pending (first (:queue (get @state el)))]
+            (js/requestAnimationFrame #(render el pending))
+            (vswap! state update-in [el :queue] #(vec (rest %))))))))
   el)
+
+(defn ^:export unmount
+  "Unmounts elements in `el`, and clears internal state."
+  [el]
+  (if (get-in @state [el :rendering?])
+    (js/requestAnimationFrame #(unmount el))
+    (do
+      (render el nil)
+      (vswap! state dissoc el)
+      nil)))
 
 (defn ^:export set-dispatch! [f]
   (set! r/*dispatch* f))

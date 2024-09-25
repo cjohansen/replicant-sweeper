@@ -1,135 +1,149 @@
 // Compiled by ClojureScript 1.11.60 {:optimizations :none}
 goog.provide('replicant.hiccup');
 goog.require('cljs.core');
-goog.require('clojure.string');
-replicant.hiccup.hiccup_QMARK_ = (function replicant$hiccup$hiccup_QMARK_(sexp){
-return ((cljs.core.vector_QMARK_.call(null,sexp)) && ((((!(cljs.core.map_entry_QMARK_.call(null,sexp)))) && ((((cljs.core.first.call(null,sexp) instanceof cljs.core.Keyword)) || (cljs.core.fn_QMARK_.call(null,cljs.core.first.call(null,sexp))))))));
-});
-replicant.hiccup.get_classes = (function replicant$hiccup$get_classes(classes){
-return cljs.core.set.call(null,(((classes instanceof cljs.core.Keyword))?new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.name.call(null,classes)], null):((typeof classes === 'string')?new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [classes], null):((cljs.core.empty_QMARK_.call(null,classes))?cljs.core.PersistentVector.EMPTY:((cljs.core.coll_QMARK_.call(null,classes))?cljs.core.map.call(null,(function (p1__9313_SHARP_){
-if((p1__9313_SHARP_ instanceof cljs.core.Keyword)){
-return cljs.core.name.call(null,p1__9313_SHARP_);
+var ret__5824__auto___10706 = replicant.hiccup.hget = (function replicant$hiccup$hget(_AMPERSAND_form,_AMPERSAND_env,x,k){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"ns","ns",441598760).cljs$core$IFn$_invoke$arity$1(_AMPERSAND_env))){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aget","cljs.core/aget",6345791,null),null,(1),null)),(new cljs.core.List(null,x,null,(1),null)),(new cljs.core.List(null,k,null,(1),null)))));
 } else {
-return p1__9313_SHARP_;
-}
-}),classes):(((classes == null))?cljs.core.PersistentVector.EMPTY:(function(){throw cljs.core.ex_info.call(null,"Received class name that is neither string, keyword, or a collection of those",new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"classes","classes",2037804510),classes], null))})()
-))))));
-});
-replicant.hiccup.parse_hiccup_symbol = (function replicant$hiccup$parse_hiccup_symbol(sym,attrs){
-var vec__9315 = cljs.core.re_find.call(null,/#([^\.#]+)/,sym);
-var _ = cljs.core.nth.call(null,vec__9315,(0),null);
-var id = cljs.core.nth.call(null,vec__9315,(1),null);
-var vec__9318 = clojure.string.split.call(null,clojure.string.replace.call(null,sym,/#([^#\.]+)/,""),/\./);
-var seq__9319 = cljs.core.seq.call(null,vec__9318);
-var first__9320 = cljs.core.first.call(null,seq__9319);
-var seq__9319__$1 = cljs.core.next.call(null,seq__9319);
-var el = first__9320;
-var classes = seq__9319__$1;
-var classes__$1 = cljs.core.remove.call(null,cljs.core.empty_QMARK_,cljs.core.mapcat.call(null,(function (p1__9314_SHARP_){
-return clojure.string.split.call(null,p1__9314_SHARP_,/ +/);
-}),cljs.core.concat.call(null,replicant.hiccup.get_classes.call(null,new cljs.core.Keyword(null,"class","class",-2030961996).cljs$core$IFn$_invoke$arity$1(attrs)),replicant.hiccup.get_classes.call(null,new cljs.core.Keyword(null,"className","className",-1983287057).cljs$core$IFn$_invoke$arity$1(attrs)),classes)));
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [clojure.string.lower_case.call(null,el),(function (){var G__9321 = cljs.core.dissoc.call(null,attrs,new cljs.core.Keyword(null,"class","class",-2030961996),new cljs.core.Keyword(null,"className","className",-1983287057));
-var G__9321__$1 = (cljs.core.truth_(id)?cljs.core.assoc.call(null,G__9321,new cljs.core.Keyword(null,"id","id",-1388402092),id):G__9321);
-if(cljs.core.seq.call(null,classes__$1)){
-return cljs.core.assoc.call(null,G__9321__$1,new cljs.core.Keyword(null,"classes","classes",2037804510),classes__$1);
-} else {
-return G__9321__$1;
-}
-})()], null);
-});
-replicant.hiccup.get_tag_name = (function replicant$hiccup$get_tag_name(hiccup){
-if(((cljs.core.coll_QMARK_.call(null,hiccup)) && ((cljs.core.first.call(null,hiccup) instanceof cljs.core.Keyword)))){
-return cljs.core.re_find.call(null,/^[a-z0-9]+/,clojure.string.lower_case.call(null,cljs.core.name.call(null,cljs.core.first.call(null,hiccup))));
-} else {
-return null;
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","nth","cljs.core/nth",1961052085,null),null,(1),null)),(new cljs.core.List(null,x,null,(1),null)),(new cljs.core.List(null,k,null,(1),null)))));
 }
 });
-replicant.hiccup.explode_styles = (function replicant$hiccup$explode_styles(s){
-return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,(function (p1__9322_SHARP_){
-var vec__9323 = cljs.core.map.call(null,clojure.string.trim,clojure.string.split.call(null,p1__9322_SHARP_,/:/));
-var k = cljs.core.nth.call(null,vec__9323,(0),null);
-var v = cljs.core.nth.call(null,vec__9323,(1),null);
-return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.keyword.call(null,k),v], null);
-}),clojure.string.split.call(null,s,/;/)));
-});
-replicant.hiccup.skip_pixelize_attrs = new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 26, [new cljs.core.Keyword(null,"line-height","line-height",1870784992),null,new cljs.core.Keyword(null,"box-flex-group","box-flex-group",-1468550335),null,new cljs.core.Keyword(null,"zoom","zoom",-1827487038),null,new cljs.core.Keyword(null,"column-count","column-count",1235131236),null,new cljs.core.Keyword(null,"flex-negative","flex-negative",-1543996476),null,new cljs.core.Keyword(null,"tab-size","tab-size",-1265790523),null,new cljs.core.Keyword(null,"font-weight","font-weight",2085804583),null,new cljs.core.Keyword(null,"stroke-opacity","stroke-opacity",-1191543159),null,new cljs.core.Keyword(null,"flex-order","flex-order",-621251126),null,new cljs.core.Keyword(null,"flex-grow","flex-grow",1865160747),null,new cljs.core.Keyword(null,"stroke-dashoffset","stroke-dashoffset",-782320340),null,new cljs.core.Keyword(null,"flex","flex",-1425124628),null,new cljs.core.Keyword(null,"flex-shrink","flex-shrink",1481146383),null,new cljs.core.Keyword(null,"stop-opacity","stop-opacity",-2018003729),null,new cljs.core.Keyword(null,"orphans","orphans",1913357231),null,new cljs.core.Keyword(null,"widows","widows",1989591025),null,new cljs.core.Keyword(null,"z-index","z-index",1892827090),null,new cljs.core.Keyword(null,"stroke-width","stroke-width",716836435),null,new cljs.core.Keyword(null,"opacity","opacity",397153780),null,new cljs.core.Keyword(null,"box-ordinal-group","box-ordinal-group",201694774),null,new cljs.core.Keyword(null,"order","order",-1254677256),null,new cljs.core.Keyword(null,"animation-iteration-count","animation-iteration-count",-1410888227),null,new cljs.core.Keyword(null,"line-clamp","line-clamp",-1079334403),null,new cljs.core.Keyword(null,"fill-opacity","fill-opacity",-537571170),null,new cljs.core.Keyword(null,"flex-positive","flex-positive",-239614242),null,new cljs.core.Keyword(null,"box-flex","box-flex",-831196194),null], null), null);
-replicant.hiccup.prep_styles = (function replicant$hiccup$prep_styles(styles){
-return cljs.core.reduce.call(null,(function (m,p__9326){
-var vec__9327 = p__9326;
-var attr = cljs.core.nth.call(null,vec__9327,(0),null);
-var v = cljs.core.nth.call(null,vec__9327,(1),null);
-if(typeof v === 'number'){
-if(cljs.core.truth_(replicant.hiccup.skip_pixelize_attrs.call(null,attr))){
-return cljs.core.update.call(null,m,attr,cljs.core.str);
-} else {
-return cljs.core.update.call(null,m,attr,cljs.core.str,"px");
-}
-} else {
-return m;
-}
-}),styles,styles);
-});
-replicant.hiccup.prep_hiccup_attrs = (function replicant$hiccup$prep_hiccup_attrs(attrs){
-var G__9330 = attrs;
-var G__9330__$1 = ((typeof new cljs.core.Keyword(null,"style","style",-496642736).cljs$core$IFn$_invoke$arity$1(attrs) === 'string')?cljs.core.update.call(null,G__9330,new cljs.core.Keyword(null,"style","style",-496642736),replicant.hiccup.explode_styles):G__9330);
-if(cljs.core.truth_(new cljs.core.Keyword(null,"style","style",-496642736).cljs$core$IFn$_invoke$arity$1(attrs))){
-return cljs.core.update.call(null,G__9330__$1,new cljs.core.Keyword(null,"style","style",-496642736),replicant.hiccup.prep_styles);
-} else {
-return G__9330__$1;
-}
-});
-replicant.hiccup.flatten_seqs = (function replicant$hiccup$flatten_seqs(xs){
-var res = cljs.core.PersistentVector.EMPTY;
-var G__9334 = xs;
-var vec__9335 = G__9334;
-var seq__9336 = cljs.core.seq.call(null,vec__9335);
-var first__9337 = cljs.core.first.call(null,seq__9336);
-var seq__9336__$1 = cljs.core.next.call(null,seq__9336);
-var x = first__9337;
-var xs__$1 = seq__9336__$1;
-var res__$1 = res;
-var G__9334__$1 = G__9334;
-while(true){
-var res__$2 = res__$1;
-var vec__9341 = G__9334__$1;
-var seq__9342 = cljs.core.seq.call(null,vec__9341);
-var first__9343 = cljs.core.first.call(null,seq__9342);
-var seq__9342__$1 = cljs.core.next.call(null,seq__9342);
-var x__$1 = first__9343;
-var xs__$2 = seq__9342__$1;
-if((((xs__$2 == null)) && ((x__$1 == null)))){
-return cljs.core.not_empty.call(null,res__$2);
-} else {
-if(cljs.core.seq_QMARK_.call(null,x__$1)){
-var G__9344 = cljs.core.into.call(null,res__$2,replicant.hiccup.flatten_seqs.call(null,x__$1));
-var G__9345 = xs__$2;
-res__$1 = G__9344;
-G__9334__$1 = G__9345;
-continue;
-} else {
-var G__9346 = cljs.core.conj.call(null,res__$2,x__$1);
-var G__9347 = xs__$2;
-res__$1 = G__9346;
-G__9334__$1 = G__9347;
-continue;
+(replicant.hiccup.hget.cljs$lang$macro = true);
 
+var ret__5824__auto___10707 = replicant.hiccup.tag_name = (function replicant$hiccup$tag_name(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(0),null,(1),null)))));
+});
+(replicant.hiccup.tag_name.cljs$lang$macro = true);
+
+var ret__5824__auto___10708 = replicant.hiccup.id = (function replicant$hiccup$id(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(1),null,(1),null)))));
+});
+(replicant.hiccup.id.cljs$lang$macro = true);
+
+var ret__5824__auto___10709 = replicant.hiccup.classes = (function replicant$hiccup$classes(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(2),null,(1),null)))));
+});
+(replicant.hiccup.classes.cljs$lang$macro = true);
+
+var ret__5824__auto___10710 = replicant.hiccup.rkey = (function replicant$hiccup$rkey(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(3),null,(1),null)))));
+});
+(replicant.hiccup.rkey.cljs$lang$macro = true);
+
+var ret__5824__auto___10711 = replicant.hiccup.attrs = (function replicant$hiccup$attrs(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(4),null,(1),null)))));
+});
+(replicant.hiccup.attrs.cljs$lang$macro = true);
+
+var ret__5824__auto___10712 = replicant.hiccup.children = (function replicant$hiccup$children(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(5),null,(1),null)))));
+});
+(replicant.hiccup.children.cljs$lang$macro = true);
+
+var ret__5824__auto___10713 = replicant.hiccup.html_ns = (function replicant$hiccup$html_ns(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(6),null,(1),null)))));
+});
+(replicant.hiccup.html_ns.cljs$lang$macro = true);
+
+var ret__5824__auto___10714 = replicant.hiccup.sexp = (function replicant$hiccup$sexp(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(7),null,(1),null)))));
+});
+(replicant.hiccup.sexp.cljs$lang$macro = true);
+
+var ret__5824__auto___10715 = replicant.hiccup.text = (function replicant$hiccup$text(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(8),null,(1),null)))));
+});
+(replicant.hiccup.text.cljs$lang$macro = true);
+
+var ret__5824__auto___10716 = replicant.hiccup.ident = (function replicant$hiccup$ident(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(9),null,(1),null)))));
+});
+(replicant.hiccup.ident.cljs$lang$macro = true);
+
+var ret__5824__auto___10717 = replicant.hiccup.alias_sexp = (function replicant$hiccup$alias_sexp(_AMPERSAND_form,_AMPERSAND_env,headers){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(10),null,(1),null)))));
+});
+(replicant.hiccup.alias_sexp.cljs$lang$macro = true);
+
+var ret__5824__auto___10719 = replicant.hiccup.get_key = (function replicant$hiccup$get_key(_AMPERSAND_form,_AMPERSAND_env,parsed_tag,attrs){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","when-let","cljs.core/when-let",-2049838349,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"k__10718__auto__","k__10718__auto__",-1258485864,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Keyword("replicant","key","replicant/key",-670108117),null,(1),null)),(new cljs.core.List(null,attrs,null,(1),null))))),null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","hget","replicant.hiccup/hget",-669681443,null),null,(1),null)),(new cljs.core.List(null,parsed_tag,null,(1),null)),(new cljs.core.List(null,(0),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"k__10718__auto__","k__10718__auto__",-1258485864,null),null,(1),null)))))),null,(1),null)))));
+});
+(replicant.hiccup.get_key.cljs$lang$macro = true);
+
+var ret__5824__auto___10722 = replicant.hiccup.create = (function replicant$hiccup$create(_AMPERSAND_form,_AMPERSAND_env,parsed_tag,attrs,children,ns,sexp){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"ns","ns",441598760).cljs$core$IFn$_invoke$arity$1(_AMPERSAND_env))){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10720__auto__","pt__10720__auto__",422759164,null),null,(1),null)),(new cljs.core.List(null,parsed_tag,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","doto","cljs.core/doto",-1284816239,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10720__auto__","pt__10720__auto__",422759164,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","get-key","replicant.hiccup/get-key",339005494,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10720__auto__","pt__10720__auto__",422759164,null),null,(1),null)),(new cljs.core.List(null,attrs,null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,attrs,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,children,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,ns,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,sexp,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aget","cljs.core/aget",6345791,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10720__auto__","pt__10720__auto__",422759164,null),null,(1),null)),(new cljs.core.List(null,(0),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,".push",".push",-1497267248,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null))))),null,(1),null))))),null,(1),null)))));
+} else {
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10721__auto__","pt__10721__auto__",-1907887582,null),null,(1),null)),(new cljs.core.List(null,parsed_tag,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","->","cljs.core/->",1488366311,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10721__auto__","pt__10721__auto__",-1907887582,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","get-key","replicant.hiccup/get-key",339005494,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10721__auto__","pt__10721__auto__",-1907887582,null),null,(1),null)),(new cljs.core.List(null,attrs,null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,attrs,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,children,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,ns,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,sexp,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","first","cljs.core/first",-752535972,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"pt__10721__auto__","pt__10721__auto__",-1907887582,null),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","conj","cljs.core/conj",-460750931,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null))))),null,(1),null))))),null,(1),null)))));
 }
+});
+(replicant.hiccup.create.cljs$lang$macro = true);
+
+var ret__5824__auto___10725 = replicant.hiccup.create_text_node = (function replicant$hiccup$create_text_node(_AMPERSAND_form,_AMPERSAND_env,text){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"ns","ns",441598760).cljs$core$IFn$_invoke$arity$1(_AMPERSAND_env))){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10723__auto__","text__10723__auto__",1112072566,null),null,(1),null)),(new cljs.core.List(null,text,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("js","Array.","js/Array.",1235645307,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10723__auto__","text__10723__auto__",1112072566,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10723__auto__","text__10723__auto__",1112072566,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null))))),null,(1),null)))));
+} else {
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10724__auto__","text__10724__auto__",-2089769077,null),null,(1),null)),(new cljs.core.List(null,text,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10724__auto__","text__10724__auto__",-2089769077,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"text__10724__auto__","text__10724__auto__",-2089769077,null),null,(1),null)),(new cljs.core.List(null,null,null,(1),null)),(new cljs.core.List(null,null,null,(1),null)))))),null,(1),null)))));
+}
+});
+(replicant.hiccup.create_text_node.cljs$lang$macro = true);
+
+var ret__5824__auto___10731 = (function (){
+replicant.hiccup.update_attrs = (function replicant$hiccup$update_attrs(var_args){
+var args__5775__auto__ = [];
+var len__5769__auto___10732 = arguments.length;
+var i__5770__auto___10733 = (0);
+while(true){
+if((i__5770__auto___10733 < len__5769__auto___10732)){
+args__5775__auto__.push((arguments[i__5770__auto___10733]));
+
+var G__10734 = (i__5770__auto___10733 + (1));
+i__5770__auto___10733 = G__10734;
+continue;
+} else {
 }
 break;
 }
+
+var argseq__5776__auto__ = ((((3) < args__5775__auto__.length))?(new cljs.core.IndexedSeq(args__5775__auto__.slice((3)),(0),null)):null);
+return replicant.hiccup.update_attrs.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),(arguments[(1)]),(arguments[(2)]),argseq__5776__auto__);
 });
-replicant.hiccup.inflate = (function replicant$hiccup$inflate(sexp){
-var tag_name = cljs.core.first.call(null,sexp);
-var args = cljs.core.rest.call(null,sexp);
-var args__$1 = ((cljs.core.map_QMARK_.call(null,cljs.core.first.call(null,args)))?args:cljs.core.concat.call(null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.PersistentArrayMap.EMPTY], null),args));
-if(cljs.core.fn_QMARK_.call(null,tag_name)){
-return cljs.core.apply.call(null,tag_name,cljs.core.rest.call(null,sexp));
+
+(replicant.hiccup.update_attrs.cljs$core$IFn$_invoke$arity$variadic = (function (_AMPERSAND_form,_AMPERSAND_env,headers,args){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"ns","ns",441598760).cljs$core$IFn$_invoke$arity$1(_AMPERSAND_env))){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"headers__10726__auto__","headers__10726__auto__",-1402742312,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aset","cljs.core/aset",-898215545,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"headers__10726__auto__","headers__10726__auto__",-1402742312,null),null,(1),null)),(new cljs.core.List(null,(4),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,cljs.core.first.call(null,args),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aget","cljs.core/aget",6345791,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"headers__10726__auto__","headers__10726__auto__",-1402742312,null),null,(1),null)),(new cljs.core.List(null,(4),null,(1),null))))),null,(1),null)),cljs.core.rest.call(null,args)))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"headers__10726__auto__","headers__10726__auto__",-1402742312,null),null,(1),null)))));
 } else {
-var vec__9348 = replicant.hiccup.parse_hiccup_symbol.call(null,cljs.core.name.call(null,tag_name),cljs.core.first.call(null,args__$1));
-var tag_name__$1 = cljs.core.nth.call(null,vec__9348,(0),null);
-var attrs = cljs.core.nth.call(null,vec__9348,(1),null);
-return new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"tag-name","tag-name",-1615615357),tag_name__$1,new cljs.core.Keyword(null,"attrs","attrs",-2090668713),replicant.hiccup.prep_hiccup_attrs.call(null,attrs),new cljs.core.Keyword(null,"children","children",-940561982),replicant.hiccup.flatten_seqs.call(null,cljs.core.rest.call(null,args__$1))], null);
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","update","cljs.core/update",-908565906,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)),(new cljs.core.List(null,(4),null,(1),null)),args)));
+}
+}));
+
+(replicant.hiccup.update_attrs.cljs$lang$maxFixedArity = (3));
+
+/** @this {Function} */
+(replicant.hiccup.update_attrs.cljs$lang$applyTo = (function (seq10727){
+var G__10728 = cljs.core.first.call(null,seq10727);
+var seq10727__$1 = cljs.core.next.call(null,seq10727);
+var G__10729 = cljs.core.first.call(null,seq10727__$1);
+var seq10727__$2 = cljs.core.next.call(null,seq10727__$1);
+var G__10730 = cljs.core.first.call(null,seq10727__$2);
+var seq10727__$3 = cljs.core.next.call(null,seq10727__$2);
+var self__5754__auto__ = this;
+return self__5754__auto__.cljs$core$IFn$_invoke$arity$variadic(G__10728,G__10729,G__10730,seq10727__$3);
+}));
+
+return null;
+})()
+;
+(replicant.hiccup.update_attrs.cljs$lang$macro = true);
+
+var ret__5824__auto___10737 = replicant.hiccup.from_alias = (function replicant$hiccup$from_alias(_AMPERSAND_form,_AMPERSAND_env,alias_k,alias,headers){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"ns","ns",441598760).cljs$core$IFn$_invoke$arity$1(_AMPERSAND_env))){
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10735__auto__","hh__10735__auto__",-607470393,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","when","cljs.core/when",120293186,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10735__auto__","hh__10735__auto__",-607470393,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","doto","cljs.core/doto",-1284816239,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10735__auto__","hh__10735__auto__",-607470393,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aset","cljs.core/aset",-898215545,null),null,(1),null)),(new cljs.core.List(null,(3),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","or","cljs.core/or",1201033885,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","rkey","replicant.hiccup/rkey",653585761,null),null,(1),null)),(new cljs.core.List(null,alias,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","rkey","replicant.hiccup/rkey",653585761,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10735__auto__","hh__10735__auto__",-607470393,null),null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aset","cljs.core/aset",-898215545,null),null,(1),null)),(new cljs.core.List(null,(7),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","sexp","replicant.hiccup/sexp",1704158409,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10735__auto__","hh__10735__auto__",-607470393,null),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aset","cljs.core/aset",-898215545,null),null,(1),null)),(new cljs.core.List(null,(9),null,(1),null)),(new cljs.core.List(null,alias_k,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","aset","cljs.core/aset",-898215545,null),null,(1),null)),(new cljs.core.List(null,(10),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","sexp","replicant.hiccup/sexp",1704158409,null),null,(1),null)),(new cljs.core.List(null,alias,null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null)))));
+} else {
+return cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","let","cljs.core/let",-308701135,null),null,(1),null)),(new cljs.core.List(null,cljs.core.vec.call(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10736__auto__","hh__10736__auto__",-482565105,null),null,(1),null)),(new cljs.core.List(null,headers,null,(1),null)))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","when","cljs.core/when",120293186,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10736__auto__","hh__10736__auto__",-482565105,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","->","cljs.core/->",1488366311,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10736__auto__","hh__10736__auto__",-482565105,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","assoc","cljs.core/assoc",322326297,null),null,(1),null)),(new cljs.core.List(null,(3),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","or","cljs.core/or",1201033885,null),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","rkey","replicant.hiccup/rkey",653585761,null),null,(1),null)),(new cljs.core.List(null,alias,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","rkey","replicant.hiccup/rkey",653585761,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10736__auto__","hh__10736__auto__",-482565105,null),null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","assoc","cljs.core/assoc",322326297,null),null,(1),null)),(new cljs.core.List(null,(7),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","sexp","replicant.hiccup/sexp",1704158409,null),null,(1),null)),(new cljs.core.List(null,new cljs.core.Symbol(null,"hh__10736__auto__","hh__10736__auto__",-482565105,null),null,(1),null))))),null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","assoc","cljs.core/assoc",322326297,null),null,(1),null)),(new cljs.core.List(null,(9),null,(1),null)),(new cljs.core.List(null,alias_k,null,(1),null))))),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("cljs.core","assoc","cljs.core/assoc",322326297,null),null,(1),null)),(new cljs.core.List(null,(10),null,(1),null)),(new cljs.core.List(null,cljs.core.sequence.call(null,cljs.core.seq.call(null,cljs.core.concat.call(null,(new cljs.core.List(null,new cljs.core.Symbol("replicant.hiccup","sexp","replicant.hiccup/sexp",1704158409,null),null,(1),null)),(new cljs.core.List(null,alias,null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null))))),null,(1),null)))));
 }
 });
+(replicant.hiccup.from_alias.cljs$lang$macro = true);
+
 
 //# sourceMappingURL=hiccup.js.map
