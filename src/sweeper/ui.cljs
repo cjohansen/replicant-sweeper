@@ -1,19 +1,7 @@
 (ns sweeper.ui
   (:require [replicant.alias :refer [defalias]]))
 
-(defn prepare-tile [{:keys [id maybe? mine? revealed? threat-count]}]
-  (cond-> {:actions (when-not revealed?
-                      {:click [[:reveal-tile id]]
-                       :contextmenu [[:mark-tile id]]})
-           :covered? (not revealed?)}
-    (and revealed? (< 0 threat-count))
-    (assoc :text threat-count)
-
-    (and (not revealed?) maybe?)
-    (assoc :text "?")
-
-    (and revealed? mine?)
-    (assoc :class "mine")))
+;; Rendering details
 
 (defalias :ui/tile [{:keys [actions text covered? class]}]
   [:div.tile
@@ -23,18 +11,35 @@
      [:div.lid text]
      text)])
 
-(defalias :minesweeper/tile [tile]
-  [:ui/tile (prepare-tile tile)])
+(defalias :ui/board [_ xs]
+  [:div.board (seq xs)])
 
-(defalias :minesweeper/line [_ tiles]
-  [:div.row
-   (for [tile tiles]
-     [:minesweeper/tile tile])])
+(defalias :ui/line [_ xs]
+  [:div.line (seq xs)])
 
-(defalias :minesweeper/board [{:keys [cols tiles]}]
-  [:div.board
+;; Data transformation / rendering logic
+
+(defn prepare-tile [{:keys [id maybe? mine? revealed? threat-count]}]
+  (cond-> {:covered? (not revealed?)}
+    (not revealed?)
+    (assoc :actions
+           {:click [[:reveal-tile id]]
+            :contextmenu [[:mark-tile id]]})
+
+    (and revealed? (< 0 threat-count))
+    (assoc :text threat-count)
+
+    (and (not revealed?) maybe?)
+    (assoc :text "?")
+
+    (and revealed? mine?)
+    (assoc :class "mine")))
+
+;; Overall structure
+
+(defn render [{:keys [cols tiles]}]
+  [:ui/board {:replicant/key (replicant.alias/get-aliases)}
    (for [ts (partition cols tiles)]
-     [:minesweeper/line ts])])
-
-(defn render [data]
-  [:minesweeper/board data])
+     [:ui/line
+      (for [tile ts]
+        [:ui/tile (prepare-tile tile)])])])
