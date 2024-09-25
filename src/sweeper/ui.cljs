@@ -23,8 +23,9 @@
   (cond-> {:covered? (not revealed?)}
     (not revealed?)
     (assoc :actions
-           {:click [[:reveal-tile id]]
-            :contextmenu [[:mark-tile id]]})
+           {:click [[:action/reveal-tile id]]
+            :contextmenu [[:action/prevent-default]
+                          [:action/mark-tile id]]})
 
     (and revealed? (< 0 threat-count))
     (assoc :text threat-count)

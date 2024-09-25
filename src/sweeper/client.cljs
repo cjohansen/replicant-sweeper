@@ -13,15 +13,18 @@
 
 (replicant/set-dispatch!
  (fn [re actions]
-   (prn "Dispatch" re)
+   (println "Dispatch" (pr-str re))
    (doseq [[action id] actions]
-     (prn "Processing action" action id)
+     (println "Processing action" (pr-str action) (pr-str id))
      (case action
-       :reveal-tile
+       :action/reveal-tile
        (swap! app-data sweeper/reveal-tile id)
 
-       :mark-tile
-       (swap! app-data assoc-in [:tiles id :maybe?] true)))))
+       :action/mark-tile
+       (swap! app-data assoc-in [:tiles id :maybe?] true)
+
+       :action/prevent-default
+       (.preventDefault (:replicant/dom-event re))))))
 
 (defn render [data]
   (let [start (js/Date.)]
