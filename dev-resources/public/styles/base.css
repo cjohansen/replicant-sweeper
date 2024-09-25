@@ -63,18 +63,26 @@ button.disabled:hover {
 }
 
 .board {
-    border: 10px solid #a49e96;
-    border-radius: 10px;
-    margin: 20px;
     background: #938d85;
     display: inline-block;
+    margin: 2vw;
+}
+
+@media (min-width: 640px) {
+    .board {
+        border: 10px solid #a49e96;
+        border-radius: 10px;
+        margin: 20px;
+    }
 }
 
 .tile {
     position: relative;
     border: 1px solid #504d49;
-    width: 30px;
-    height: 30px;
+    width: 5.5vw;
+    max-width: 30px;
+    height: 5.5vw;
+    max-height: 30px;
     float: left;
     color: #100d09;
     font-weight: bold;
