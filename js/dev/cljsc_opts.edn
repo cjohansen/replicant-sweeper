@@ -1,0 +1,1 @@
+{:output-dir "dev-resources/public/js/dev", :optimizations :none, :aot-cache false, :preloads [devtools.preload], :output-to "dev-resources/public/js/app.js", :asset-path "js/dev", :source-map true, :main "sweeper.dev", :pretty-print true}
