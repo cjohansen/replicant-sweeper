@@ -1,56 +1,26 @@
 (ns sweeper.ui
-  (:require [replicant.dom :as replicant]
-            [sweeper.game :as sweeper]))
+  (:require [replicant.alias :refer [defalias]]))
 
-(defonce app-data (atom (sweeper/create-game {:cols 16 :rows 16 :mines 48})))
-(defonce app-history (atom [@app-data]))
-(defonce el (.getElementById js/document "board"))
-
-(defn undo []
-  (swap! app-history pop)
-  (reset! app-data (last @app-history)))
-
-(defn tile-view [tile]
-  (if (:revealed? tile)
-    [:div {:class [:tile (when (:mine? tile) :mine)]}
-     (when (< 0 (:threat-count tile))
-       (:threat-count tile))]
+(defalias :ui/tile [{:keys [id maybe? mine? revealed? threat-count]}]
+  (if revealed?
+    [:div {:class [:tile (when mine? :mine)]}
+     (when (< 0 threat-count)
+       threat-count)]
     [:div {:class "tile"
-           :on {:click [[:reveal-tile (:id tile)]]
-                :ContextMenu [[:mark-tile (:id tile)]]}}
+           :on {:click [[:reveal-tile id]]
+                :ContextMenu [[:mark-tile id]]}}
      [:div {:class "lid"}
-      (when (:maybe? tile) "?")]]))
+      (when maybe? "?")]]))
 
-(defn line-view [tiles]
-  [:div {:class "row"}
-   (map tile-view tiles)])
+(defalias :ui/line [_ tiles]
+  [:div.row
+   (for [tile tiles]
+     [:ui/tile tile])])
 
-(defn board-view [game]
-  [:div {:class "board"}
-   (map line-view (partition (:cols game) (:tiles game)))])
-
-(replicant/set-dispatch!
- (fn [re _e actions]
-   (prn "Dispatch" re)
-   (doseq [[action id] actions]
-     (prn "Processing action" action id)
-     (case action
-       :reveal-tile
-       (swap! app-data sweeper/reveal-tile id)
-
-       :mark-tile
-       (swap! app-data assoc-in [:tiles id :maybe?] true)))))
+(defalias :ui/board [{:keys [cols tiles]}]
+  [:div.board
+   (for [ts (partition cols tiles)]
+     [:ui/line ts])])
 
 (defn render [data]
-  (let [start (js/Date.)]
-    (replicant/render el (board-view data))
-    (println "Rendered in" (str (- (js/Date.) start) "ms"))))
-
-(defn start []
-  (add-watch
-   app-data :history
-   (fn [_key _ref _old new]
-     (when-not (= (last @app-history) new)
-       (swap! app-history conj new))
-     (render new)))
-  (render @app-data))
+  [:ui/board data])
