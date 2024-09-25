@@ -36,3 +36,14 @@
        (swap! app-history conj new))
      (render new)))
   (render @app-data))
+
+(comment
+
+  (set! *print-namespace-maps* false)
+
+  (require '[replicant.alias :as alias])
+
+  (-> (ui/render @app-data)
+      alias/expand-1)
+
+)
