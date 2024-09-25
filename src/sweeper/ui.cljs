@@ -3,7 +3,7 @@
 
 ;; Rendering details
 
-(defalias :ui/tile [{:keys [actions text covered? class]}]
+(defalias tile [{:keys [actions text covered? class]}]
   [:div.tile
    {:class class
     :on actions}
@@ -11,11 +11,11 @@
      [:div.lid text]
      text)])
 
-(defalias :ui/board [_ xs]
-  [:div.board (seq xs)])
+(defalias board [attrs xs]
+  [:div.board xs])
 
-(defalias :ui/line [_ xs]
-  [:div.line (seq xs)])
+(defalias line [_ xs]
+  [:div.line xs])
 
 ;; Data transformation / rendering logic
 
@@ -38,8 +38,8 @@
 ;; Overall structure
 
 (defn render [{:keys [cols tiles]}]
-  [:ui/board {:replicant/key (replicant.alias/get-aliases)}
+  [board {:replicant/key (replicant.alias/get-aliases)}
    (for [ts (partition cols tiles)]
-     [:ui/line
+     [line
       (for [tile ts]
-        [:ui/tile (prepare-tile tile)])])])
+        [tile (prepare-tile tile)])])])
