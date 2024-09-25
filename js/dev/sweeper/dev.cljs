@@ -1,5 +1,4 @@
 (ns sweeper.dev
-  (:require [sweeper.ui :as minesweeper]))
+  (:require [sweeper.client :as minesweeper]))
 
-(prn "OK!")
 (minesweeper/start)

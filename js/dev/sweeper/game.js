@@ -1,14 +1,14 @@
 // Compiled by ClojureScript 1.11.60 {:optimizations :none}
 goog.provide('sweeper.game');
 goog.require('cljs.core');
-sweeper.game.create_game = (function sweeper$game$create_game(p__12241){
-var map__12242 = p__12241;
-var map__12242__$1 = cljs.core.__destructure_map.call(null,map__12242);
-var rows = cljs.core.get.call(null,map__12242__$1,new cljs.core.Keyword(null,"rows","rows",850049680));
-var cols = cljs.core.get.call(null,map__12242__$1,new cljs.core.Keyword(null,"cols","cols",-1914801295));
-var mines = cljs.core.get.call(null,map__12242__$1,new cljs.core.Keyword(null,"mines","mines",-1960796490));
-return new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"cols","cols",-1914801295),cols,new cljs.core.Keyword(null,"rows","rows",850049680),rows,new cljs.core.Keyword(null,"playing-time","playing-time",1335382619),(0),new cljs.core.Keyword(null,"tiles","tiles",178505240),cljs.core.mapv.call(null,cljs.core.identity,cljs.core.map_indexed.call(null,(function (p1__12240_SHARP_,p2__12239_SHARP_){
-return cljs.core.assoc.call(null,p2__12239_SHARP_,new cljs.core.Keyword(null,"id","id",-1388402092),p1__12240_SHARP_);
+sweeper.game.create_game = (function sweeper$game$create_game(p__12427){
+var map__12428 = p__12427;
+var map__12428__$1 = cljs.core.__destructure_map.call(null,map__12428);
+var rows = cljs.core.get.call(null,map__12428__$1,new cljs.core.Keyword(null,"rows","rows",850049680));
+var cols = cljs.core.get.call(null,map__12428__$1,new cljs.core.Keyword(null,"cols","cols",-1914801295));
+var mines = cljs.core.get.call(null,map__12428__$1,new cljs.core.Keyword(null,"mines","mines",-1960796490));
+return new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null,"cols","cols",-1914801295),cols,new cljs.core.Keyword(null,"rows","rows",850049680),rows,new cljs.core.Keyword(null,"playing-time","playing-time",1335382619),(0),new cljs.core.Keyword(null,"tiles","tiles",178505240),cljs.core.mapv.call(null,cljs.core.identity,cljs.core.map_indexed.call(null,(function (p1__12426_SHARP_,p2__12425_SHARP_){
+return cljs.core.assoc.call(null,p2__12425_SHARP_,new cljs.core.Keyword(null,"id","id",-1388402092),p1__12426_SHARP_);
 }),cljs.core.shuffle.call(null,cljs.core.concat.call(null,cljs.core.repeat.call(null,mines,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"mine?","mine?",155874651),true,new cljs.core.Keyword(null,"revealed?","revealed?",726959164),false], null)),cljs.core.repeat.call(null,((rows * cols) - mines),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"revealed?","revealed?",726959164),false], null))))))], null);
 });
 sweeper.game.on_w_edge_QMARK_ = (function sweeper$game$on_w_edge_QMARK_(game,tile){
@@ -74,8 +74,8 @@ return sweeper.game.idx.call(null,game,(tile - (1)));
 });
 sweeper.game.directions = new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [sweeper.game.nw,sweeper.game.n,sweeper.game.ne,sweeper.game.e,sweeper.game.se,sweeper.game.s,sweeper.game.sw,sweeper.game.w], null);
 sweeper.game.neighbours = (function sweeper$game$neighbours(game,tile){
-return cljs.core.keep.call(null,(function (p1__12243_SHARP_){
-return cljs.core.get_in.call(null,game,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240),p1__12243_SHARP_.call(null,game,tile)], null));
+return cljs.core.keep.call(null,(function (p1__12429_SHARP_){
+return cljs.core.get_in.call(null,game,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240),p1__12429_SHARP_.call(null,game,tile)], null));
 }),sweeper.game.directions);
 });
 sweeper.game.get_mine_count = (function sweeper$game$get_mine_count(game,tile){
@@ -113,8 +113,8 @@ return sweeper.game.reveal_adjacent_safe_tiles.call(null,game__$2,pos);
 } else {
 return game__$2;
 }
-}),game__$1,cljs.core.keep.call(null,(function (p1__12244_SHARP_){
-return p1__12244_SHARP_.call(null,game__$1,tile);
+}),game__$1,cljs.core.keep.call(null,(function (p1__12430_SHARP_){
+return p1__12430_SHARP_.call(null,game__$1,tile);
 }),sweeper.game.directions));
 } else {
 return game__$1;
@@ -136,16 +136,20 @@ return tile;
 }
 });
 sweeper.game.reveal_mines = (function sweeper$game$reveal_mines(game){
-return cljs.core.update_in.call(null,game,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240)], null),(function (p1__12245_SHARP_){
-return cljs.core.map.call(null,sweeper.game.reveal_mine,p1__12245_SHARP_);
+return cljs.core.update_in.call(null,game,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240)], null),(function (p1__12431_SHARP_){
+return cljs.core.map.call(null,sweeper.game.reveal_mine,p1__12431_SHARP_);
 }));
 });
 sweeper.game.reveal_tile = (function sweeper$game$reveal_tile(game,tile){
+if(cljs.core.truth_(new cljs.core.Keyword(null,"dead?","dead?",990391228).cljs$core$IFn$_invoke$arity$1(game))){
+return game;
+} else {
 var updated = (((cljs.core.get_in.call(null,game,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240),tile], null)) == null))?game:cljs.core.assoc_in.call(null,game,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"tiles","tiles",178505240),tile,new cljs.core.Keyword(null,"revealed?","revealed?",726959164)], null),true));
 if(cljs.core.truth_(sweeper.game.mine_QMARK_.call(null,updated,tile))){
 return sweeper.game.reveal_mines.call(null,cljs.core.assoc.call(null,updated,new cljs.core.Keyword(null,"dead?","dead?",990391228),true));
 } else {
 return sweeper.game.attempt_winning.call(null,sweeper.game.reveal_adjacent_safe_tiles.call(null,sweeper.game.add_threat_count.call(null,updated,tile),tile));
+}
 }
 });
 

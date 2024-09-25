@@ -76,10 +76,9 @@ goog.addDependency("../devtools/formatters.js", ['devtools.formatters'], ['devto
 goog.addDependency("../devtools/hints.js", ['devtools.hints'], ['cljs.stacktrace', 'cljs.core', 'devtools.context', 'devtools.prefs']);
 goog.addDependency("../devtools/core.js", ['devtools.core'], ['devtools.toolbox', 'devtools.util', 'cljs.core', 'devtools.async', 'devtools.formatters', 'devtools.hints', 'devtools.context', 'devtools.defaults', 'devtools.prefs']);
 goog.addDependency("../devtools/preload.js", ['devtools.preload'], ['cljs.core', 'devtools.core', 'devtools.prefs']);
-goog.addDependency("../cljs/env.js", ['cljs.env'], ['cljs.core']);
 goog.addDependency("../replicant/console_logger.js", ['replicant.console_logger'], ['cljs.pprint', 'clojure.walk', 'cljs.core']);
 goog.addDependency("../replicant/hiccup.js", ['replicant.hiccup'], ['cljs.core']);
-goog.addDependency("../replicant/assert.js", ['replicant.assert'], ['cljs.env', 'replicant.console_logger', 'replicant.hiccup', 'cljs.core']);
+goog.addDependency("../replicant/assert.js", ['replicant.assert'], ['replicant.console_logger', 'replicant.hiccup', 'cljs.core']);
 goog.addDependency("../replicant/asserts.js", ['replicant.asserts'], ['replicant.assert', 'replicant.hiccup', 'clojure.string', 'cljs.core']);
 goog.addDependency("../replicant/protocols.js", ['replicant.protocols'], ['cljs.core']);
 goog.addDependency("../replicant/vdom.js", ['replicant.vdom'], ['replicant.hiccup', 'cljs.core']);
@@ -88,5 +87,6 @@ goog.addDependency("../replicant/alias.js", ['replicant.alias'], ['clojure.walk'
 goog.addDependency("../replicant/transition.js", ['replicant.transition'], ['cljs.core']);
 goog.addDependency("../replicant/dom.js", ['replicant.dom'], ['replicant.alias', 'replicant.core', 'replicant.protocols', 'replicant.transition', 'cljs.core']);
 goog.addDependency("../sweeper/game.js", ['sweeper.game'], ['cljs.core']);
-goog.addDependency("../sweeper/ui.js", ['sweeper.ui'], ['replicant.dom', 'sweeper.game', 'cljs.core']);
-goog.addDependency("../sweeper/dev.js", ['sweeper.dev'], ['sweeper.ui', 'cljs.core']);
+goog.addDependency("../sweeper/ui.js", ['sweeper.ui'], ['replicant.alias', 'cljs.core']);
+goog.addDependency("../sweeper/client.js", ['sweeper.client'], ['replicant.dom', 'sweeper.game', 'sweeper.ui', 'cljs.core']);
+goog.addDependency("../sweeper/dev.js", ['sweeper.dev'], ['sweeper.client', 'cljs.core']);

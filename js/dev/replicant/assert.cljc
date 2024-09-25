@@ -1,5 +1,5 @@
 (ns replicant.assert
-  (:require #?(:cljs [cljs.env :as env])
+  (:require #?(:clj [replicant.env :as env])
             [replicant.console-logger :as console]
             [replicant.hiccup :as hiccup])
   (:refer-clojure :exclude [assert])
@@ -10,22 +10,7 @@
 (def error (atom nil))
 
 (defn assert? []
-  (if-let [options #?(:cljs (and cljs.env/*compiler*
-                                 (:options @cljs.env/*compiler*))
-                      :clj (when (System/getProperty "replicant.asserts")
-                             {:replicant/asserts? true}))]
-    (cond
-      (contains? options :replicant/asserts?)
-      (:replicant/asserts? options)
-
-      (contains? (:closure-defines options) "replicant/asserts?")
-      (get-in options [:closure-defines "replicant/asserts?"])
-
-      (not (#{:advanced :simple} (:optimizations options)))
-      true
-
-      :else false)
-    false))
+  #?(:clj (env/enabled? :replicant/asserts? (env/dev?))))
 
 (defmacro enter-node [headers]
   (when (assert?)

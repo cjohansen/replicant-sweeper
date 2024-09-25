@@ -111,14 +111,16 @@
   (update-in game [:tiles] #(map reveal-mine %)))
 
 (defn reveal-tile [game tile]
-  (let [updated (if (nil? (get-in game [:tiles tile]))
-                  game
-                  (assoc-in game [:tiles tile :revealed?] true))]
-    (if (mine? updated tile)
-      (-> updated
-          (assoc :dead? true)
-          reveal-mines)
-      (-> updated
-          (add-threat-count tile)
-          (reveal-adjacent-safe-tiles tile)
-          attempt-winning))))
+  (if (:dead? game)
+    game
+    (let [updated (if (nil? (get-in game [:tiles tile]))
+                    game
+                    (assoc-in game [:tiles tile :revealed?] true))]
+      (if (mine? updated tile)
+        (-> updated
+            (assoc :dead? true)
+            reveal-mines)
+        (-> updated
+            (add-threat-count tile)
+            (reveal-adjacent-safe-tiles tile)
+            attempt-winning)))))

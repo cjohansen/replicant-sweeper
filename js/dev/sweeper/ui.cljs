@@ -1,56 +1,46 @@
 (ns sweeper.ui
-  (:require [replicant.dom :as replicant]
-            [sweeper.game :as sweeper]))
+  (:require [replicant.alias :refer [defalias]]))
 
-(defonce app-data (atom (sweeper/create-game {:cols 16 :rows 16 :mines 48})))
-(defonce app-history (atom [@app-data]))
-(defonce el (.getElementById js/document "board"))
+;; Rendering details
 
-(defn undo []
-  (swap! app-history pop)
-  (reset! app-data (last @app-history)))
+(defalias cell [{:keys [actions text covered? class] :as a} b]
+  [:div.tile
+   (cond-> {:class class}
+     (not-empty actions) (assoc :on actions))
+   (if covered?
+     [:div.lid text]
+     text)])
 
-(defn tile-view [tile]
-  (if (:revealed? tile)
-    [:div {:class [:tile (when (:mine? tile) :mine)]}
-     (when (< 0 (:threat-count tile))
-       (:threat-count tile))]
-    [:div {:class "tile"
-           :on {:click [[:reveal-tile (:id tile)]]
-                :ContextMenu [[:mark-tile (:id tile)]]}}
-     [:div {:class "lid"}
-      (when (:maybe? tile) "?")]]))
+(defalias board [_ xs]
+  [:div.board xs])
 
-(defn line-view [tiles]
-  [:div {:class "row"}
-   (map tile-view tiles)])
+(defalias line [_ xs]
+  [:div.line xs])
 
-(defn board-view [game]
-  [:div {:class "board"}
-   (map line-view (partition (:cols game) (:tiles game)))])
+;; Data transformation / rendering logic
 
-(replicant/set-dispatch!
- (fn [re _e actions]
-   (prn "Dispatch" re)
-   (doseq [[action id] actions]
-     (prn "Processing action" action id)
-     (case action
-       :reveal-tile
-       (swap! app-data sweeper/reveal-tile id)
+(defn prepare-tile [{:keys [id maybe? mine? revealed? threat-count]}]
+  (cond-> {:covered? (not revealed?)}
+    (not revealed?)
+    (assoc :actions
+           {:click [[:action/reveal-tile id]]
+            :contextmenu [[:action/prevent-default]
+                          [:action/mark-tile id]]})
 
-       :mark-tile
-       (swap! app-data assoc-in [:tiles id :maybe?] true)))))
+    (and revealed? (< 0 threat-count))
+    (assoc :text threat-count)
 
-(defn render [data]
-  (let [start (js/Date.)]
-    (replicant/render el (board-view data))
-    (println "Rendered in" (str (- (js/Date.) start) "ms"))))
+    (and (not revealed?) maybe?)
+    (assoc :text "?")
 
-(defn start []
-  (add-watch
-   app-data :history
-   (fn [_key _ref _old new]
-     (when-not (= (last @app-history) new)
-       (swap! app-history conj new))
-     (render new)))
-  (render @app-data))
+    (and revealed? mine?)
+    (assoc :class "mine")))
+
+;; Overall structure
+
+(defn render [{:keys [cols tiles]}]
+  [board
+   (for [ts (partition cols tiles)]
+     [line
+      (for [tile ts]
+        [cell (prepare-tile tile)])])])
