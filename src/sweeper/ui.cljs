@@ -1,26 +1,40 @@
 (ns sweeper.ui
   (:require [replicant.alias :refer [defalias]]))
 
-(defalias :ui/tile [{:keys [id maybe? mine? revealed? threat-count]}]
-  (if revealed?
-    [:div {:class [:tile (when mine? :mine)]}
-     (when (< 0 threat-count)
-       threat-count)]
-    [:div {:class "tile"
-           :on {:click [[:reveal-tile id]]
-                :ContextMenu [[:mark-tile id]]}}
-     [:div {:class "lid"}
-      (when maybe? "?")]]))
+(defn prepare-tile [{:keys [id maybe? mine? revealed? threat-count]}]
+  (cond-> {:actions (when-not revealed?
+                      {:click [[:reveal-tile id]]
+                       :contextmenu [[:mark-tile id]]})
+           :covered? (not revealed?)}
+    (and revealed? (< 0 threat-count))
+    (assoc :text threat-count)
 
-(defalias :ui/line [_ tiles]
+    (and (not revealed?) maybe?)
+    (assoc :text "?")
+
+    (and revealed? mine?)
+    (assoc :class "mine")))
+
+(defalias :ui/tile [{:keys [actions text covered? class]}]
+  [:div.tile
+   {:class class
+    :on actions}
+   (if covered?
+     [:div.lid text]
+     text)])
+
+(defalias :minesweeper/tile [tile]
+  [:ui/tile (prepare-tile tile)])
+
+(defalias :minesweeper/line [_ tiles]
   [:div.row
    (for [tile tiles]
-     [:ui/tile tile])])
+     [:minesweeper/tile tile])])
 
-(defalias :ui/board [{:keys [cols tiles]}]
+(defalias :minesweeper/board [{:keys [cols tiles]}]
   [:div.board
    (for [ts (partition cols tiles)]
-     [:ui/line ts])])
+     [:minesweeper/line ts])])
 
 (defn render [data]
-  [:ui/board data])
+  [:minesweeper/board data])
