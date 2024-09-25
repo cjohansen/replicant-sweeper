@@ -3,15 +3,15 @@
 
 ;; Rendering details
 
-(defalias tile [{:keys [actions text covered? class]}]
+(defalias cell [{:keys [actions text covered? class] :as a} b]
   [:div.tile
-   {:class class
-    :on actions}
+   (cond-> {:class class}
+     (not-empty actions) (assoc :on actions))
    (if covered?
      [:div.lid text]
      text)])
 
-(defalias board [attrs xs]
+(defalias board [_ xs]
   [:div.board xs])
 
 (defalias line [_ xs]
@@ -38,8 +38,8 @@
 ;; Overall structure
 
 (defn render [{:keys [cols tiles]}]
-  [board {:replicant/key (replicant.alias/get-aliases)}
+  [board
    (for [ts (partition cols tiles)]
      [line
       (for [tile ts]
-        [tile (prepare-tile tile)])])])
+        [cell (prepare-tile tile)])])])
