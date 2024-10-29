@@ -1,6 +1,7 @@
 (ns replicant.dom
   (:require [replicant.alias :as alias]
             [replicant.core :as r]
+            [replicant.env :as env]
             [replicant.protocols :as replicant]
             [replicant.transition :as transition]))
 
@@ -77,6 +78,21 @@
         (= "value" attr)
         (set! (.-value el) v)
 
+        (= "selected" attr)
+        (set! (.-selected el) v)
+
+        (= "checked" attr)
+        (set! (.-checked el) v)
+
+        (= "disabled" attr)
+        (set! (.-disabled el) v)
+
+        (= "readonly" attr)
+        (set! (.-readonly el) v)
+
+        (= "required" attr)
+        (set! (.-required el) v)
+
         (:ns opt)
         (.setAttributeNS el (:ns opt) attr v)
 
@@ -85,8 +101,29 @@
       this)
 
     (remove-attribute [this el attr]
-      (if (= "innerHTML" attr)
+      (cond
+        (= "innerHTML" attr)
         (set! (.-innerHTML el) "")
+
+        (= "value" attr)
+        (set! (.-value el) nil)
+
+        (= "selected" attr)
+        (set! (.-selected el) nil)
+
+        (= "checked" attr)
+        (set! (.-checked el) nil)
+
+        (= "disabled" attr)
+        (set! (.-disabled el) nil)
+
+        (= "readonly" attr)
+        (set! (.-readonly el) nil)
+
+        (= "required" attr)
+        (set! (.-required el) nil)
+
+        :else
         (.removeAttribute el attr))
       this)
 
@@ -154,8 +191,8 @@
       (do
         (vswap! state assoc-in [el :rendering?] true)
         (let [{:keys [renderer current unmounts]} (get @state el)
-              aliases (or aliases (alias/get-aliases))
-              hiccup (alias/key-hiccup hiccup aliases)
+              aliases (or aliases (alias/get-registered-aliases))
+              hiccup (env/with-dev-keys hiccup aliases)
               {:keys [vdom]} (r/reconcile renderer el hiccup current {:unmounts unmounts
                                                                       :aliases aliases})]
           (vswap! state update el merge {:current vdom

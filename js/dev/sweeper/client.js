@@ -24,20 +24,20 @@ return cljs.core.reset_BANG_.call(null,sweeper.client.app_data,cljs.core.last.ca
 replicant.dom.set_dispatch_BANG_.call(null,(function (re,actions){
 cljs.core.println.call(null,"Dispatch",cljs.core.pr_str.call(null,re));
 
-var seq__12554 = cljs.core.seq.call(null,actions);
-var chunk__12555 = null;
-var count__12556 = (0);
-var i__12557 = (0);
+var seq__12546 = cljs.core.seq.call(null,actions);
+var chunk__12547 = null;
+var count__12548 = (0);
+var i__12549 = (0);
 while(true){
-if((i__12557 < count__12556)){
-var vec__12566 = cljs.core._nth.call(null,chunk__12555,i__12557);
-var action = cljs.core.nth.call(null,vec__12566,(0),null);
-var id = cljs.core.nth.call(null,vec__12566,(1),null);
+if((i__12549 < count__12548)){
+var vec__12558 = cljs.core._nth.call(null,chunk__12547,i__12549);
+var action = cljs.core.nth.call(null,vec__12558,(0),null);
+var id = cljs.core.nth.call(null,vec__12558,(1),null);
 cljs.core.println.call(null,"Processing action",cljs.core.pr_str.call(null,action),cljs.core.pr_str.call(null,id));
 
-var G__12569_12574 = action;
-var G__12569_12575__$1 = (((G__12569_12574 instanceof cljs.core.Keyword))?G__12569_12574.fqn:null);
-switch (G__12569_12575__$1) {
+var G__12561_12566 = action;
+var G__12561_12567__$1 = (((G__12561_12566 instanceof cljs.core.Keyword))?G__12561_12566.fqn:null);
+switch (G__12561_12567__$1) {
 case "action/reveal-tile":
 cljs.core.swap_BANG_.call(null,sweeper.client.app_data,sweeper.game.reveal_tile,id);
 
@@ -51,44 +51,44 @@ new cljs.core.Keyword("replicant","dom-event","replicant/dom-event",-1613182512)
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12569_12575__$1)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12561_12567__$1)].join('')));
 
 }
 
 
-var G__12577 = seq__12554;
-var G__12578 = chunk__12555;
-var G__12579 = count__12556;
-var G__12580 = (i__12557 + (1));
-seq__12554 = G__12577;
-chunk__12555 = G__12578;
-count__12556 = G__12579;
-i__12557 = G__12580;
+var G__12569 = seq__12546;
+var G__12570 = chunk__12547;
+var G__12571 = count__12548;
+var G__12572 = (i__12549 + (1));
+seq__12546 = G__12569;
+chunk__12547 = G__12570;
+count__12548 = G__12571;
+i__12549 = G__12572;
 continue;
 } else {
-var temp__5804__auto__ = cljs.core.seq.call(null,seq__12554);
+var temp__5804__auto__ = cljs.core.seq.call(null,seq__12546);
 if(temp__5804__auto__){
-var seq__12554__$1 = temp__5804__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__12554__$1)){
-var c__5568__auto__ = cljs.core.chunk_first.call(null,seq__12554__$1);
-var G__12581 = cljs.core.chunk_rest.call(null,seq__12554__$1);
-var G__12582 = c__5568__auto__;
-var G__12583 = cljs.core.count.call(null,c__5568__auto__);
-var G__12584 = (0);
-seq__12554 = G__12581;
-chunk__12555 = G__12582;
-count__12556 = G__12583;
-i__12557 = G__12584;
+var seq__12546__$1 = temp__5804__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__12546__$1)){
+var c__5568__auto__ = cljs.core.chunk_first.call(null,seq__12546__$1);
+var G__12573 = cljs.core.chunk_rest.call(null,seq__12546__$1);
+var G__12574 = c__5568__auto__;
+var G__12575 = cljs.core.count.call(null,c__5568__auto__);
+var G__12576 = (0);
+seq__12546 = G__12573;
+chunk__12547 = G__12574;
+count__12548 = G__12575;
+i__12549 = G__12576;
 continue;
 } else {
-var vec__12570 = cljs.core.first.call(null,seq__12554__$1);
-var action = cljs.core.nth.call(null,vec__12570,(0),null);
-var id = cljs.core.nth.call(null,vec__12570,(1),null);
+var vec__12562 = cljs.core.first.call(null,seq__12546__$1);
+var action = cljs.core.nth.call(null,vec__12562,(0),null);
+var id = cljs.core.nth.call(null,vec__12562,(1),null);
 cljs.core.println.call(null,"Processing action",cljs.core.pr_str.call(null,action),cljs.core.pr_str.call(null,id));
 
-var G__12573_12585 = action;
-var G__12573_12586__$1 = (((G__12573_12585 instanceof cljs.core.Keyword))?G__12573_12585.fqn:null);
-switch (G__12573_12586__$1) {
+var G__12565_12577 = action;
+var G__12565_12578__$1 = (((G__12565_12577 instanceof cljs.core.Keyword))?G__12565_12577.fqn:null);
+switch (G__12565_12578__$1) {
 case "action/reveal-tile":
 cljs.core.swap_BANG_.call(null,sweeper.client.app_data,sweeper.game.reveal_tile,id);
 
@@ -102,19 +102,19 @@ new cljs.core.Keyword("replicant","dom-event","replicant/dom-event",-1613182512)
 
 break;
 default:
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12573_12586__$1)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__12565_12578__$1)].join('')));
 
 }
 
 
-var G__12588 = cljs.core.next.call(null,seq__12554__$1);
-var G__12589 = null;
-var G__12590 = (0);
-var G__12591 = (0);
-seq__12554 = G__12588;
-chunk__12555 = G__12589;
-count__12556 = G__12590;
-i__12557 = G__12591;
+var G__12580 = cljs.core.next.call(null,seq__12546__$1);
+var G__12581 = null;
+var G__12582 = (0);
+var G__12583 = (0);
+seq__12546 = G__12580;
+chunk__12547 = G__12581;
+count__12548 = G__12582;
+i__12549 = G__12583;
 continue;
 }
 } else {
