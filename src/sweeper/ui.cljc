@@ -3,7 +3,7 @@
 
 ;; Rendering details
 
-(defalias cell [{:keys [actions text covered? class] :as a} b]
+(defalias cell [{:keys [actions text covered? class]} _]
   [:div.tile
    (cond-> {:class class}
      (not-empty actions) (assoc :on actions))
