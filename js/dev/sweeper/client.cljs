@@ -28,7 +28,7 @@
 
 (defn render [data]
   (let [start (js/Date.)]
-    (replicant/render el (ui/render data))
+    (replicant/render el (ui/render (ui/prepare-ui-data data)))
     (println "Rendered in" (str (- (js/Date.) start) "ms"))))
 
 (defn start []
