@@ -1,19 +1,20 @@
 (ns replicant.dom
   (:require [replicant.alias :as alias]
+            [replicant.assert :as assert]
             [replicant.core :as r]
             [replicant.env :as env]
             [replicant.protocols :as replicant]
             [replicant.transition :as transition]))
 
-(defn remove-listener [^js/EventTarget el event]
+(defn ^:no-doc remove-listener [^js/EventTarget el event]
   (when-let [old-handler (some-> el .-replicantHandlers (aget event))]
     (.removeEventListener el event old-handler)))
 
-(defn on-next-frame [f]
+(defn ^:no-doc on-next-frame [f]
   (js/requestAnimationFrame
    #(js/requestAnimationFrame f)))
 
-(defn -on-transition-end [el f]
+(defn ^:no-doc -on-transition-end [el f]
   (let [[n dur] (-> (js/window.getComputedStyle el)
                     (.getPropertyValue "transition-duration")
                     transition/get-transition-stats)]
@@ -43,7 +44,7 @@
         ;; important part is that the element doesn't get stuck forever.
         (vreset! timer (js/setTimeout callback (+ dur 200)))))))
 
-(defn create-renderer []
+(defn ^:no-doc create-renderer []
   (reify
     replicant/IRender
     (create-text-node [_this text]
@@ -71,33 +72,47 @@
       this)
 
     (set-attribute [this el attr v opt]
-      (cond
-        (= "innerHTML" attr)
-        (set! (.-innerHTML el) v)
+      (try
+        (cond
+          (= "innerHTML" attr)
+          (set! (.-innerHTML el) v)
 
-        (= "value" attr)
-        (set! (.-value el) v)
+          (= "value" attr)
+          (set! (.-value el) v)
 
-        (= "selected" attr)
-        (set! (.-selected el) v)
+          (= "default-value" attr)
+          (.setAttribute el "value" v)
 
-        (= "checked" attr)
-        (set! (.-checked el) v)
+          (= "selected" attr)
+          (set! (.-selected el) v)
 
-        (= "disabled" attr)
-        (set! (.-disabled el) v)
+          (= "default-selected" attr)
+          (.setAttribute el "selected" v)
 
-        (= "readonly" attr)
-        (set! (.-readonly el) v)
+          (= "checked" attr)
+          (set! (.-checked el) v)
 
-        (= "required" attr)
-        (set! (.-required el) v)
+          (= "default-checked" attr)
+          (.setAttribute el "checked" v)
 
-        (:ns opt)
-        (.setAttributeNS el (:ns opt) attr v)
+          (= "disabled" attr)
+          (set! (.-disabled el) v)
 
-        :else
-        (.setAttribute el attr v))
+          (= "readonly" attr)
+          (set! (.-readonly el) v)
+
+          (= "required" attr)
+          (set! (.-required el) v)
+
+          (:ns opt)
+          (.setAttributeNS el (:ns opt) attr v)
+
+          :else
+          (.setAttribute el attr v))
+        (catch :default e
+          (assert/log-error
+           (str "Replicant caught an error during rendering: "
+                (.-message e)))))
       this)
 
     (remove-attribute [this el attr]
@@ -108,11 +123,20 @@
         (= "value" attr)
         (set! (.-value el) nil)
 
+        (= "default-value" attr)
+        (.removeAttribute el "value")
+
         (= "selected" attr)
         (set! (.-selected el) nil)
 
+        (= "default-selected" attr)
+        (.removeAttribute el "selected")
+
         (= "checked" attr)
         (set! (.-checked el) nil)
+
+        (= "default-checked" attr)
+        (.removeAttribute el "checked")
 
         (= "disabled" attr)
         (set! (.-disabled el) nil)
@@ -172,13 +196,13 @@
     (next-frame [_this f]
       (on-next-frame f))))
 
-(defonce state (volatile! {}))
+(defonce ^:no-doc state (volatile! {}))
 
 (defn ^:export render
   "Render `hiccup` in DOM element `el`. Replaces any pre-existing content not
   created by this function. Subsequent calls with the same `el` will update the
   rendered DOM by comparing `hiccup` to the previous `hiccup`."
-  [el hiccup & [{:keys [aliases]}]]
+  [el hiccup & [{:keys [aliases alias-data]}]]
   (let [rendering? (get-in @state [el :rendering?])]
     (when-not (contains? @state el)
       (set! (.-innerHTML el) "")
@@ -192,9 +216,10 @@
         (vswap! state assoc-in [el :rendering?] true)
         (let [{:keys [renderer current unmounts]} (get @state el)
               aliases (or aliases (alias/get-registered-aliases))
-              hiccup (env/with-dev-keys hiccup aliases)
+              hiccup (env/with-dev-keys hiccup [aliases alias-data])
               {:keys [vdom]} (r/reconcile renderer el hiccup current {:unmounts unmounts
-                                                                      :aliases aliases})]
+                                                                      :aliases aliases
+                                                                      :alias-data alias-data})]
           (vswap! state update el merge {:current vdom
                                          :rendering? false})
           (when-let [pending (first (:queue (get @state el)))]
@@ -212,5 +237,9 @@
       (vswap! state dissoc el)
       nil)))
 
-(defn ^:export set-dispatch! [f]
+(defn ^:export set-dispatch!
+  "Register a global dispatch function for event handlers and life-cycle hooks
+  that are not functions. See data-driven event handlers and life-cycle hooks in
+  the user guide for details."
+  [f]
   (set! r/*dispatch* f))
